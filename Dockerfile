@@ -1,8 +1,8 @@
 FROM node:alpine
 
-RUN mkdir -p /usr/app/api-hortifrutti
+RUN mkdir -p /usr/app/hortifrutti-api
 
-WORKDIR /usr/app/api-hortifrutti
+WORKDIR /usr/app/hortifrutti-api
 
 RUN apk add --no-cache git
 
