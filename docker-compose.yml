@@ -1,0 +1,92 @@
+version: "3.9"
+
+services:
+  hortifruttiapp:
+    container_name: api-hortifrutti
+    working_dir: /usr/app
+    # networks:
+    #   default:
+    #     ipv4_address: 10.22.33.2
+    # restart: always
+    build: 
+      context: .
+    #command: npm start
+    ports:
+      - "3333:3333"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SERVER_PORT=8080
+      - MYSQL_URL=jdbc:mysql://hortifrutti_db/mdb_hortifrutti
+      - TZ=America/Brasilia
+    volumes:
+      - .:/usr/app/api-hortifrutti
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./:/usr/app
+      - /opt/apps/logs:/opt/apps/logs
+      - /mnt/compartilhado/mavenrepo:/root/.m2/repository
+    depends_on:
+      - hortifrutti_db
+
+  phpmyadminhortifrutti:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadminhortifrutti
+    # networks:
+    #   default:
+    #     ipv4_address: 10.22.33.3
+    restart: always
+    links:
+      - hortifrutti_db:db
+    ports:
+      - "8881:80"
+    environment:
+      PMA_HOST: hortifrutti_db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      PHP_UPLOAD_MAX_FILESIZE: 100MB
+    depends_on:
+      - hortifrutti_db
+  
+  hortifrutti_db:
+    image: mariadb
+    container_name: hortifrutti_db
+    # networks:
+    #   default:
+    #     ipv4_address: 10.22.44.1
+    #restart: always
+    ports:
+       - 3306:3306
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
+      MARIADB_ROOT_PASSWORD:
+      MARIADB_HOST: localhost
+      MARIADB_PORT: 3306
+      MARIADB_USER: lucid
+      MARIADB_PASSWORD: lucid@1234
+      MARIADB_DB_NAME: mdb_hortifrutti
+
+      MYSQL_HOST: localhost
+      MYSQL_PORT: 3306
+      MYSQL_USER: lucid
+      MYSQL_PASSWORD: lucid@1234
+      MYSQL_DB_NAME: mdb_hortifrutti
+
+    volumes:
+      - mysql_data:/var/lib/mysql-files
+      - mysql_config:/etc/mysql
+      - mysql_files:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+  
+volumes:
+  mysql_data:
+  mysql_config:
+  mysql_files:
+
+networks:
+  default:
+    name: hortifruttinet
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.22.44.0/24
