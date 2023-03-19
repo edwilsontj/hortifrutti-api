@@ -8,15 +8,18 @@ services:
   hortifruttiapp:
     container_name: hortifrutti-api
     working_dir: /usr/app/hortifrutti-api
+    env_file:
+    - .env
     # command: npm start
     build: 
       context: .
     ports:
       - "3333:3333"
     environment:
-      - MARIADB_URL=jdbc:mysql://hortifrutti_db/mdb_hortifrutti
-      - TZ=America/Brasilia
-      - SERVER_PORT=3306
+      - MYSQL_HOST=hortifrutti_db
+      # - TZ=America/Brasilia
+    #   - MARIADB_URL=jdbc:mysql://hortifrutti_db/mdb_hortifrutti
+    #   - SERVER_PORT=3306
       # - SPRING_PROFILES_ACTIVE=dev
       # - MYSQL_URL=jdbc:mysql://hortifrutti_db/mdb_hortifrutti
     volumes:
@@ -37,7 +40,10 @@ services:
       - hortifrutti_db:db
     ports:
       - "8881:80"
+    env_file:
+      - .env
     environment:
+      MYSQL_HOST: hortifrutti_db
       PMA_HOST: hortifrutti_db
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
@@ -50,21 +56,10 @@ services:
     container_name: hortifrutti_db
     ports:
        - 3306:3306
+    env_file:
+      - .env
     environment:
-      # MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
-      # MARIADB_ROOT_PASSWORD:
-      # MARIADB_HOST: hortifrutti_db
-      # MARIADB_PORT: 3306
-      # MARIADB_USER: root
-      # MARIADB_PASSWORD: 
-      # MARIADB_DB_NAME: mdb_hortifrutti
-      MYSQL_ALLOW_EMPTY_ROOT_PASSWORD: true
-      MYSQL_ROOT_PASSWORD:
-      MYSQL_HOST: hortifrutti_db
-      MYSQL_PORT: 3306
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 
-      MYSQL_DB_NAME: mdb_hortifrutti
+      - MYSQL_HOST=hortifrutti_db
     volumes:
       - mysql_data:/var/lib/mysql-files
       - mysql_config:/etc/mysql
