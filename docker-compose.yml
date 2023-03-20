@@ -26,7 +26,6 @@ services:
       - .:/usr/app/hortifrutti-api
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
-      # - ./:/usr/app
       - /opt/apps/logs:/opt/apps/logs
       # - /mnt/compartilhado/mavenrepo:/root/.m2/repository
     depends_on:
