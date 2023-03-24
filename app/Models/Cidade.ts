@@ -1,7 +1,6 @@
-// import Estabelecimento from 'App/Models/Estabelecimento';
-// import { BaseModel, column, HasOne, hasOne, ManyToMany, manyToMany } from "@ioc:Adonis/Lucid/Orm";
-// import Estado from "App/Models/Estado";
-import { BaseModel, column } from "@ioc:Adonis/Lucid/Orm";
+import { BaseModel, column, hasOne, HasOne, manyToMany, ManyToMany } from "@ioc:Adonis/Lucid/Orm";
+import Estabelecimento from "./Estabelecimento";
+import Estado from "./Estado";
 
 export default class Cidade extends BaseModel {
   @column({ isPrimary: true })
@@ -16,18 +15,18 @@ export default class Cidade extends BaseModel {
   @column()
   public ativo: boolean;
   
-  // @hasOne(() => Estado, {
-    //   foreignKey: "id",
-    //   localKey: "estado_id",
-    // })
-    // public estado: HasOne<typeof Estado>;
+  @hasOne(() => Estado, {
+      foreignKey: "id",
+      localKey: "estado_id",
+    })
+    public estado: HasOne<typeof Estado>;
 
-  // @manyToMany(() => Estabelecimento, {
-  //   pivotTable: "cidades_estabelecimentos",
-  //   localKey: "id",
-  //   pivotForeignKey: "cidade_id",
-  //   relatedKey: "id",
-  //   pivotRelatedForeignKey: "estabelecimento_id",
-  // })
-  // public estabelecimentos: ManyToMany<typeof Estabelecimento>;
+  @manyToMany(() => Estabelecimento, {
+    pivotTable: "cidades_estabelecimentos",
+    localKey: "id",
+    pivotForeignKey: "cidade_id",
+    relatedKey: "id",
+    pivotRelatedForeignKey: "estabelecimento_id",
+  })
+  public estabelecimentos: ManyToMany<typeof Estabelecimento>;
 }

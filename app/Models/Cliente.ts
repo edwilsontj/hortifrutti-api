@@ -1,7 +1,6 @@
-// import { BaseModel, column, hasMany, HasMany } from "@ioc:Adonis/Lucid/Orm";
-import { BaseModel, column } from "@ioc:Adonis/Lucid/Orm";
+import { BaseModel, column, hasMany, HasMany } from "@ioc:Adonis/Lucid/Orm";
 import { DateTime } from "luxon";
-// import Endereco from "App/Models/Endereco";
+import Endereco from "./Endereco";
 
 export default class Cliente extends BaseModel {
   @column({ isPrimary: true })
@@ -19,9 +18,9 @@ export default class Cliente extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
 
-  // @hasMany(() => Endereco, {
-  //   localKey: "id",
-  //   foreignKey: "clienteId",
-  // })
-  // public enderecos: HasMany<typeof Endereco>;
+  @hasMany(() => Endereco, {
+    localKey: "id",
+    foreignKey: "clienteId",
+  })
+  public enderecos: HasMany<typeof Endereco>;
 }
