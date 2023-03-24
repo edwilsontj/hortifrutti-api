@@ -9,6 +9,8 @@ Route.post("/cliente/cadastro", "ClientesController.store");
 Route.get("/cidades", "CidadesController.index");
 Route.get("/cidades/:id/estabelecimentos", "CidadesController.estabelecimentos");
 
+Route.get("/estabelecimentos/:id", "EstabelecimentosController.show");
+
 Route.group(() => { 
   Route.get("auth/me", "AuthController.me")
 
@@ -18,6 +20,12 @@ Route.group(() => {
     "update",
     "destroy"
   ])
+
+  Route.post("/pedidos","PedidosController.store")
+  Route.get("/pedidos","PedidosController.index")
+  Route.get("/pedidos/:hash_id","PedidosController.show")
+
+  Route.get("/Estabelecimento/pedidos","EstabelecimentosController.pedidos")
 
   Route.put("/cliente","ClientesController.update");
 }).middleware("auth")
