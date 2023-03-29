@@ -8,21 +8,21 @@ import User from "App/Models/User";
 
 export default class EstabelecimentoSeeder extends BaseSeeder {
   public async run() {
-    const user = await User.create({
-      email: "webevolui@email.com",
-      password: "123456",
-      tipo: "estabelecimentos",
-    });
+    // const user = await User.create({
+    //   email: "webevolui@email.com",
+    //   password: "123456",
+    //   tipo: "estabelecimentos",
+    // });
 
-    await Estabelecimento.create({
-      nome: faker.company.name(),
-      logo: `https://picsum.photos/id/1/200/200`,
-      online: true,
-      bloqueado: false,
-      userId: user.id,
-    });
+    // await Estabelecimento.create({
+    //   nome: faker.company.name(),
+    //   logo: `https://picsum.photos/id/1/200/200`,
+    //   online: true,
+    //   bloqueado: false,
+    //   userId: user.id,
+    // });
 
-    for (let i = 2; i <= 20; i++) {
+    for (let i = 1; i <= 20; i++) {
       await User.create({
         email: `estabelecimento${i}@email.com`,
         password: "12345678",
@@ -30,7 +30,7 @@ export default class EstabelecimentoSeeder extends BaseSeeder {
       });
     }
 
-    for (let i = 2; i <= 20; i++) {
+    for (let i = 1; i <= 20; i++) {
       await Estabelecimento.create({
         nome: faker.company.name(),
         logo: `https://picsum.photos/id/${i}/200/200`,
