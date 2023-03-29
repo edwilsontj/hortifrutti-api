@@ -15,7 +15,8 @@ export default class EstabelecimentoSeeder extends BaseSeeder {
     });
 
     await Estabelecimento.create({
-      nome: "Estabelecimento",
+      nome: faker.company.name(),
+      logo: `https://picsum.photos/id/1/200/200`,
       online: true,
       bloqueado: false,
       userId: user.id,
@@ -31,9 +32,9 @@ export default class EstabelecimentoSeeder extends BaseSeeder {
 
     for (let i = 2; i <= 20; i++) {
       await Estabelecimento.create({
-        nome: `Estabelecimento ${i}`,
+        nome: faker.company.name(),
         logo: `https://picsum.photos/id/${i}/200/200`,
-        online: true,
+        online: faker.datatype.number({ min: 0, max: 1 }) == 1,
         bloqueado: false,
         userId: i,
       });
@@ -56,14 +57,6 @@ export default class EstabelecimentoSeeder extends BaseSeeder {
 
     await Cidade.createMany([
       {
-        nome: "Aimorés",
-        estado_id: 1,
-      },
-      {
-        nome: "Colatina",
-        estado_id: 2,
-      },
-      {
         nome: "Rio de Janeiro",
         estado_id: 3,
       },
@@ -79,11 +72,20 @@ export default class EstabelecimentoSeeder extends BaseSeeder {
         nome: "Duque de Caxias",
         estado_id: 3,
       },
+      {
+        nome: "Aimorés",
+        estado_id: 1,
+      },
+      {
+        nome: "Colatina",
+        estado_id: 2,
+      },
+
     ]);
 
     for (let i = 1; i <= 20; i++) {
       await CidadesEstabelecimento.create({
-        cidade_id: faker.datatype.number({ min: 1, max: 6 }),
+        cidade_id: faker.datatype.number({ min: 1, max: 2 }),
         estabelecimento_id: i,
         custo_entrega: faker.datatype.float({
           min: 0,
